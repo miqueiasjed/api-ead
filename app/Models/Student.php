@@ -13,8 +13,15 @@ class Student extends Model
         'birth_date'
     ];
 
+    public array $rules = [
+        'course_id' => 'required',
+        'name' => 'required|min:3|max:255',
+        'email' => 'required|email|max:255',
+        'birth_date' => 'required',
+    ];
+
     public function course()
     {
-        return $this->belongsTo(Course::class)
+        return $this->belongsTo(Course::class);
     }
 }

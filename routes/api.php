@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'v1'], function(){
+    Route::group(['namespace' => 'Api\v1'], function () {
+        Route::get('courses', [CourseController::class, 'all']);
+
+        Route::post('students', [StudentController::class, 'create']);
+        Route::get('students', [StudentController::class, 'all']);
+        Route::get('students/{id}', [StudentController::class, 'find']);
+        Route::put('students/{param}', [StudentController::class, 'edit']);
+        Route::delete('students/{id}', [StudentController::class, 'delete']);
+    });
 });

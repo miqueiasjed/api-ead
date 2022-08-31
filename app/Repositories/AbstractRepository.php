@@ -22,8 +22,8 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         $data = $this->model::query();
 
-        foreach($orderBy as $key => $value){
-            if(strstr($key, '-')) {
+        foreach ($orderBy as $key => $value) {
+            if (strstr($key, '-')) {
                 $key = substr($key, 1);
             }
 
