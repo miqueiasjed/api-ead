@@ -9,9 +9,9 @@ Clonar repositório github
 DB_CONNECTION=pgsql
 DB_HOST=pgsql
 DB_PORT=5432
-DB_DATABASE=api_curso_db
-DB_USERNAME=api_curso_user
-DB_PASSWORD=cdf26213a
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
 
 ## Passo 3 - Rodar Docker
 docker-compose up -d
