@@ -7,10 +7,15 @@ Clonar repositório github
 
 ## Passo 2 - Configurar DB no .env
 DB_CONNECTION=pgsql
+
 DB_HOST=pgsql
+
 DB_PORT=5432
+
 DB_DATABASE=
+
 DB_USERNAME=
+
 DB_PASSWORD=
 
 ## Passo 3 - Rodar Docker
