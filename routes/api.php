@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Auth\LoginController;
+use App\Http\Controllers\Api\v1\Auth\RegisterController;
 use App\Http\Controllers\Api\v1\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,12 @@ use App\Http\Controllers\Api\v1\StudentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::prefix('auth')->group(function(){
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout']);
+    Route::post('register', [RegisterController::class, 'register']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
