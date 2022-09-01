@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\v1\Auth\LoginController;
-use App\Http\Controllers\Api\v1\Auth\RegisterController;
-use App\Http\Controllers\Api\v1\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\StudentController;
+use App\Http\Controllers\Api\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +19,28 @@ use App\Http\Controllers\Api\v1\StudentController;
 |
 */
 
-Route::prefix('auth')->group(function(){
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout']);
-    Route::post('register', [RegisterController::class, 'register']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/me', function(Request $request) {
+        return auth()->user();
+    });
+
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 Route::group(['prefix' => 'v1'], function(){
     Route::group(['namespace' => 'Api\v1'], function () {
         Route::get('courses', [CourseController::class, 'all']);
+        Route::post('courses', [CourseController::class, 'create']);
+        Route::get('courses/{id}', [CourseController::class, 'find']);
+        Route::put('courses/{param}', [CourseController::class, 'edit']);
+        Route::delete('courses/{id}', [CourseController::class, 'delete']);
 
         Route::post('students', [StudentController::class, 'create']);
         Route::get('students', [StudentController::class, 'all']);
